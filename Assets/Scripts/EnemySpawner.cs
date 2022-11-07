@@ -36,22 +36,6 @@ public class EnemySpawner : MonoBehaviour
 
     IEnumerator SpawnEnemyWaves()
     {
-        // foreach(WaveConfigS0 wave in waveConfigs)
-        // {
-        //     currentWave = wave;
-        //     for (int i = 0; i < currentWave.GetEnemyCount(); i++)
-        //     {
-        //         Instantiate(currentWave.GetEnemyPrefab(i),
-        //             currentWave.GetStartWaypoint().position,
-        //             Quaternion.identity,
-        //             transform
-        //         );
-
-        //         yield return new WaitForSeconds(currentWave.GetRandomSpawnTime());
-        //     }
-        //     yield return new WaitForSeconds(timeBetweenWaves);
-        // }
-
         do
         {
             foreach(WaveConfigS0 wave in waveConfigs)
@@ -61,7 +45,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     Instantiate(currentWave.GetEnemyPrefab(i),
                         currentWave.GetStartWaypoint().position,
-                        Quaternion.identity,
+                        Quaternion.Euler(0, 0, 180), // enemy prefabs 이미지를 뒤집어서 여기서 180으로 다시 뒤집어서 spawn
                         transform
                     );
 
