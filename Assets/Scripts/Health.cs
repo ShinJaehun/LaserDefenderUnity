@@ -13,12 +13,14 @@ public class Health : MonoBehaviour
 
     AudioPlayer audioPlayer;
     ScoreKeeper scoreKeeper;
+    LevelManager levelManager;
 
     void Awake()
     {
         cameraShake = Camera.main.GetComponent<CameraShake>();
         audioPlayer = FindObjectOfType<AudioPlayer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        levelManager = FindObjectOfType<LevelManager>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -32,6 +34,13 @@ public class Health : MonoBehaviour
             audioPlayer.PlayDamageClip();
             ShakeCamera();
             damageDealer.Hit();
+
+            if (other.tag == "Enemy")
+            {
+                // 일단 충돌하면 걍 다시 실행하게 해 놨는데
+                // 사실은 데미지를 적당히 조절하도록 수정할 필요가 있음!
+                levelManager.LoadGameOver();
+            }
         }
     }
 
@@ -43,9 +52,12 @@ public class Health : MonoBehaviour
     void TakeDamage(int damage)
     {
         health -= damage;
+        Debug.Log("맞음");
+
         if (health <= 0)
         {
             // Destroy(gameObject);
+            Debug.Log("죽음");
             Die();
         }
     }
@@ -55,6 +67,12 @@ public class Health : MonoBehaviour
         if (!isPlayer)
         {
             scoreKeeper.ModifyScore(score);
+            Debug.Log("플레이어 아님");
+        }
+        else
+        {
+            levelManager.LoadGameOver();
+            Debug.Log("플레이어 죽음");
         }
         Destroy(gameObject);
     }
