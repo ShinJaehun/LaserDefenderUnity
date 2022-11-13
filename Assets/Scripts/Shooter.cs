@@ -68,6 +68,7 @@ public class Shooter : MonoBehaviour
             timeToNextProjectile = Mathf.Clamp(timeToNextProjectile, minimumFiringRate, float.MaxValue);
 
             audioPlayer.PlayShootingClip();
+            // audioPlayer.GetInstance().PlayShootingClip(); // 이렇게 사용 가능
 
             yield return new WaitForSeconds(timeToNextProjectile);
         }

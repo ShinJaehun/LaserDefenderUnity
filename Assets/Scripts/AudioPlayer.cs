@@ -12,6 +12,42 @@ public class AudioPlayer : MonoBehaviour
     [SerializeField] AudioClip damageClip;
     [SerializeField] [Range(0f, 1f)] float damageVolume = 1f;
 
+    static AudioPlayer instance;
+    // public AudioPlayer GetInstance()
+    // {
+    //     return instance;
+    // }
+
+    void Awake()
+    {
+        ManageSingleton();
+    }
+
+    void ManageSingleton()
+    {
+        // int instanceCount = FindObjectsOfType(GetType()).Length;
+        // if (instanceCount > 1)
+        // {
+        //     gameObject.SetActive(false);
+        //     Destroy(gameObject);
+        // }
+        // else
+        // {
+        //     DontDestroyOnLoad(gameObject);
+        // }
+
+        if (instance != null) //이런 형식의 코드가 훨씬 더 이해하기 쉬운데!
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+
+    }
 
     // public void PlayShootingClip()
     // {
