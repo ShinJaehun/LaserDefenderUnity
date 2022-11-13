@@ -7,9 +7,21 @@ public class LevelManager : MonoBehaviour
 {
 
     [SerializeField] float sceneLoadDelay = 2f;
+    ScoreKeeper scoreKeeper;
+
+    void Awake() 
+    {
+        // scoreKeeper = FindObjectOfType<ScoreKeeper>();
+        // 원래 이 코드가 맞는데 LoadGame()에서 scoreKeeper를 찾을 수 없어서
+        // null exception이 계속 발생했음. 그래서 여기서 지우고
+        // LoadGame()할 때마다 호출하는 식으로 수정함.
+    }
 
     public void LoadGame()
     {
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();    
+
+        scoreKeeper.ResetScore();
         SceneManager.LoadScene("Game");
     }
 
